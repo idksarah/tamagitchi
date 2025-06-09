@@ -1,0 +1,23 @@
+name: fuck
+
+on:
+  schedule:
+    - cron: "0 */1 * * *" # every hour
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: test
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          touch fuck.md
+          git add fuck.md
+          git commit -m "fuck"
+          git pull origin main --rebase
+          git push origin HEAD:main
