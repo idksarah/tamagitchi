@@ -1,5 +1,3 @@
-import { Emotions } from "./emotions.mjs";
-
 const emotions = new Map();
 emotions.set("excited", "filepath");
 emotions.set("happy", "filepath");

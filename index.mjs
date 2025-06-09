@@ -1,32 +1,38 @@
 import { Octokit } from "octokit";
 import dotenv from "dotenv";
 import fs from "fs";
-// import { Emotions } from "./emotions.mjs";
 import { tamagitchi } from "./tamagitchi.mjs";
 import { User } from "./user.mjs";
+import stats from "./stats.json" with {type: "json"};
 
 dotenv.config();
+
+const regEvents = ["PushEvent", "ReleaseEvent", "WatchEvent", "CommitCommentEvent", "CreateEvent", "DeleteEvent", "GollumEvent", "PublicEvent"];
+const socialEvents = ["ForkEvent", "IssueCommentEvent", "IssuesEvent", "PullRequestEvent", "PullRequestReviewEvent", "PullRequestReviewCommentEvent",  "PullRequestReviewThreadEvent", "MemberEvent"];
 
 const octokit = new Octokit({
     auth: process.env.GITHUB_TOKEN,
 });
 
-const regEvents = ["PushEvent", "ReleaseEvent", "WatchEvent", "CommitCommentEvent", "CreateEvent", "DeleteEvent", "GollumEvent", "PublicEvent"];
-const socialEvents = ["ForkEvent", "IssueCommentEvent", "IssuesEvent", "PullRequestEvent", "PullRequestReviewEvent", "PullRequestReviewCommentEvent",  "PullRequestReviewThreadEvent", "MemberEvent"];
-
 const DAY = 24 * 60 * 60 * 1000; 
-let designatedRepo = "tamagitchi"; // let user set this up somehow? maybe in the .env idk
+
+const username = "idksarah";
+const highlightedRepo = "tamagitchi"; // let user choose!
 
 const main = async () => {
-    const userRes = await octokit.request("GET /user");
+    const userRes = await octokit.rest.users.getByUsername({username});
     console.log("Authenticated as:", userRes.data.login);
 
     const publicActivity = await octokit.rest.activity.listPublicEventsForUser({
-        username: `${userRes.data.name}`,
+        username: `${userRes.data.login}`,
         per_page: 10
-    })
+    });
 
-    // console.log(publicActivity.data)
+    const repoRes = await octokit.rest.repos.get({
+         owner: `${userRes.data.login}`,
+         repo: highlightedRepo
+     });
+
     let lastDayAct = [], lastThreeDayAct = []; // activity within last day and 3 days
     publicActivity.data.forEach(event => {
         let date = new Date(event.created_at.substring(0,10));
@@ -36,8 +42,15 @@ const main = async () => {
             lastThreeDayAct.push(event);
         }
     })
+    if (lastThreeDayAct.length == 0 ){ 
+        tamagitchi.pet.emotion = "sad";
+    } else {
+        tamagitchi.pet.emotion = "happy";
+    }
     lastDayAct.forEach(event => {
-        if(lastDayAct.length >= 1){
+        if (userRes.data.followers > 1 || repoRes.data.stargazers_count > stats.stargazers_count){
+            tamagitchi.pet.emotion = "excited";
+        } else if(lastDayAct.length >= 1){
             if(lastDayAct.length >= 5){
                 tamagitchi.pet.emotion = "excited";
             } else {
@@ -45,34 +58,15 @@ const main = async () => {
             }
         } 
     })
-    lastThreeDayAct.forEach(event => {
-        if(lastThreeDayAct.length == 0){
-            tamagitchi.pet.emotion = "sad";
-        } else {
-            tamagitchi.pet.emotion = "happy";
-        }
-    })
-    // for(let i = 0; i < publicActivity.data.length; i++){
-    //     let event = publicActivity.data[i].type
-    //     if (regEvents.some(element => element === event)) {
-    //         User.currUser.regEvents++;
-    //     } else if (socialEvents.some(element => element === event)) {
-    //         User.currUser.socialEvents++;
-    //     }
-    // }
-    User.currUser.followers = userRes.data.followers;
-    console.log(User.currUser);
+    console.log(stats);
+    console.log(userRes.data.followers);
+    console.log(repoRes.data.stargazers_count);
+    console.log(tamagitchi.pet.emotion);
 
-
-    
-    const lastStatusRes = await fetch("https://raw.githubusercontent.com/idksarah/tamagitchi/main/status.json");
-    const lastStatus = await lastStatusRes.json();
-
-    console.log(lastStatus);
-    //write to file here
-
-
-
+    // update stats.json
+    stats.followers = userRes.data.followers;
+    stats.stars = repoRes.data.stargazers_count;
+    fs.writeFileSync("./stats.json", JSON.stringify(stats, null, 2));
 };
 
 main();
