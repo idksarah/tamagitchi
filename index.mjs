@@ -71,7 +71,7 @@ const main = async () => {
 };
 
 function generateReadme(emotion, url){
-    return ` [!tamagitchi[(${url}) <br>
+    return ` ![tamagitchi](${url}) <br>
     tamagitchi is feeling ${emotion}!
     `
 }
