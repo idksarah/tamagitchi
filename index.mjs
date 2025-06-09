@@ -16,10 +16,11 @@ const octokit = new Octokit({
 
 const DAY = 24 * 60 * 60 * 1000; 
 
+const username = "idksarah";
 const highlightedRepo = "tamagitchi"; // let user choose!
 
 const main = async () => {
-    const userRes = await octokit.request("GET /user");
+    const userRes = await octokit.rest.users.getByUsername({username});
     console.log("Authenticated as:", userRes.data.login);
 
     const publicActivity = await octokit.rest.activity.listPublicEventsForUser({
