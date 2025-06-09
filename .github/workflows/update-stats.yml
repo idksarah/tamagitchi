@@ -57,10 +57,11 @@ jobs:
       - name: Commit status.json
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          REPO: ${{ github.repository}}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${github.repository}.git
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${REPO}.git
           git pull origin main --rebase
           git add status.json
           git commit -m "Update status [skip ci]" || echo "No changes"
