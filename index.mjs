@@ -21,12 +21,6 @@ const highlightedRepo = "tamagitchi"; // let user choose!
 const main = async () => {
     const userRes = await octokit.request("GET /user");
     console.log("Authenticated as:", userRes.data.login);
-
-    const publicActivity = await octokit.rest.activity.listPublicEventsForUser({
-        username: `${userRes.data.login}`,
-        per_page: 10
-    });
-
     const repoRes = await octokit.rest.repos.get({
          owner: `${userRes.data.login}`,
          repo: highlightedRepo
