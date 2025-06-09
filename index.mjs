@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import fs from "fs";
 import { tamagitchi } from "./tamagitchi.mjs";
 import { User } from "./user.mjs";
-import stats from "./stats.json" assert {type: "json"};
+import stats from "./stats.json" with {type: "json"};
 
 dotenv.config();
 
@@ -23,12 +23,12 @@ const main = async () => {
     console.log("Authenticated as:", userRes.data.login);
 
     const publicActivity = await octokit.rest.activity.listPublicEventsForUser({
-        username: `${userRes.data.name}`,
+        username: `${userRes.data.login}`,
         per_page: 10
     });
 
     const repoRes = await octokit.rest.repos.get({
-         owner: `${userRes.data.name}`,
+         owner: `${userRes.data.login}`,
          repo: highlightedRepo
      });
 
@@ -59,10 +59,10 @@ const main = async () => {
             }
         } 
     })
-    console.log(stats);
-    console.log(userRes.data.followers);
-    console.log(repoRes.data.stargazers_count);
-    console.log(tamagitchi.pet.emotion);
+    // console.log(stats);
+    // console.log(userRes.data.followers);
+    // console.log(repoRes.data.stargazers_count);
+    // console.log(tamagitchi.pet.emotion);
 
     // update stats.json
     stats.followers = userRes.data.followers;
