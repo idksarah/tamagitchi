@@ -25,12 +25,7 @@ jobs:
       - name: Install Octokit
         run: 
           npm install @octokit/rest
-
-      - name: Generate stats.json
-        env:
-          GITHUB_TOKEN: ${{ secrets.FGPA_TOKEN }}
-        run: |
-          node index.mjs
+          npm install
 
       - name: Commit stats.json
         run: |
@@ -42,4 +37,3 @@ jobs:
           git pull origin main --rebase
           git stash pop
           git push origin HEAD:main
-
