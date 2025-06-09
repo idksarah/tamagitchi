@@ -7,12 +7,12 @@ import stats from "./stats.json" with {type: "json"};
 
 dotenv.config();
 
-const octokit = new Octokit({
-    auth: process.env.GITHUB_TOKEN,
-});
-
 const regEvents = ["PushEvent", "ReleaseEvent", "WatchEvent", "CommitCommentEvent", "CreateEvent", "DeleteEvent", "GollumEvent", "PublicEvent"];
 const socialEvents = ["ForkEvent", "IssueCommentEvent", "IssuesEvent", "PullRequestEvent", "PullRequestReviewEvent", "PullRequestReviewCommentEvent",  "PullRequestReviewThreadEvent", "MemberEvent"];
+
+const octokit = new Octokit({
+    auth: process.env.FGPA_TOKEN,
+});
 
 const DAY = 24 * 60 * 60 * 1000; 
 

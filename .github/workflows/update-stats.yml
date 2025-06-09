@@ -12,7 +12,7 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repo
+      - name: Checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
@@ -22,13 +22,16 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install Dependencies
-        run: npm install
+      - name: Install Octokit
+        run: 
+          npm install @octokit/rest
+          npm install
 
-      - name: Updates stats.json
-        run: node index.mjs
+      - name: Generate stats.json
         env:
-         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          FGPA_TOKEN: ${{ secrets.FGPA_TOKEN }}
+        run: |
+          node index.mjs
 
       - name: Commit stats.json
         run: |
@@ -40,3 +43,4 @@ jobs:
           git pull origin main --rebase
           git stash pop
           git push origin HEAD:main
+
