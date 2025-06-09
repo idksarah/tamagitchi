@@ -2,7 +2,7 @@ import { Octokit } from "octokit";
 import dotenv from "dotenv";
 import fs from "fs";
 // import { Emotions } from "./emotions.mjs";
-import { tamagitchi } from "./tamagitchi";
+import { tamagitchi } from "./tamagitchi.mjs";
 import { User } from "./user.mjs";
 
 dotenv.config();
