@@ -47,4 +47,3 @@ jobs:
             git stash pop
             git push origin HEAD:main
           fi
-          
