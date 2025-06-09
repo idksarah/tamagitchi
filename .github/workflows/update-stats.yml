@@ -61,4 +61,5 @@ jobs:
           git add status.json
           git commit -m "Update status [skip ci]" || echo "No changes"
           git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${github.repository}.git
+          git pull
           git push
