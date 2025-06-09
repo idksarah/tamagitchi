@@ -66,14 +66,12 @@ const main = async () => {
 
     const readMeContent = generateReadme(tamagitchi.pet.emotion, getEmotionUrl(tamagitchi.pet.emotion));
     
-    fs.writeFileSync("./README.md", readMeContent);
-
+    fs.writeFileSync("./profile-repo/README.md", readMeContent);
 };
 
 function generateReadme(emotion, url){
     return ` ![tamagitchi](${url}) <br>
-    tamagitchi is feeling ${emotion}!
-    `
+    tamagitchi is feeling ${emotion}!`
 }
 
 main();

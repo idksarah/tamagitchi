@@ -2,7 +2,7 @@ name: Update
 
 on:
   schedule:
-    - cron: "0 */1 * * *" # every hour
+    - cron: "0 */1 * * *"
   workflow_dispatch:
 
 permissions:
@@ -12,9 +12,17 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout tamagitchi repo
         uses: actions/checkout@v3
         with:
+          fetch-depth: 0
+
+      - name: Checkout profile repo
+        uses: actions/checkout@v3
+        with:
+          repository: idksarah/idksarah
+          token: ${{ secrets.FGPA_TOKEN }}
+          path: profile-repo
           fetch-depth: 0
 
       - name: Setup Node
@@ -22,25 +30,22 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install Octokit
-        run: 
-          npm install @octokit/rest
-          npm install
+      - name: Install dependencies
+        run: npm install
 
-      - name: Update stats.json
+      - name: Run tamagitchi update
         env:
           GITHUB_TOKEN: ${{ secrets.FGPA_TOKEN }}
-        run: |
-          node index.mjs
+        run: node index.mjs
 
-      - name: Commit stats.json
+      - name: Commit stats.json and README.md to tamagitchi repo
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add stats.json README.md
           if git diff --cached --quiet; then
             echo "No changes to commit"
-          else 
+          else
             git commit -m "Update tamagitchi"
             git stash
             git pull origin main --rebase
@@ -48,33 +53,16 @@ jobs:
             git push origin HEAD:main
           fi
 
-      # - name: Checkout profile repo
-      #   uses: actions/checkout@v3
-      #   with:
-      #     repository: idksarah/idksarah  # change to your user
-      #     token: ${{ secrets.FGPA_TOKEN }}
-      #     path: profile-repo
-      #     fetch-depth: 0
-
-      # - name: Run update script (repo 2)
-      #   working-directory: ./profile-repo
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.FGPA_TOKEN }}
-      #   run: |
-
-
-      # - name: Commit and push changes (repo 2)
-      #   working-directory: ./profile-repo
-      #   run: |
-      #     git config user.name "github-actions[bot]"
-      #     git config user.email "github-actions[bot]@users.noreply.github.com"
-      #     git add stats.json
-      #     if git diff --cached --quiet; then
-      #       echo "No changes to commit"
-      #     else
-      #       git commit -m "Update stats"
-      #       git stash
-      #       git pull origin main --rebase
-      #       git stash pop
-      #       git push origin HEAD:main
-      #     fi
+      - name: Commit updated README.md to profile repo
+        working-directory: ./profile-repo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          if git diff --cached --quiet; then
+            echo "No changes to commit in profile repo"
+          else
+            git commit -m "Update tamagitchi emotion in profile"
+            git pull origin main --rebase
+            git push origin HEAD:main
+          fi
