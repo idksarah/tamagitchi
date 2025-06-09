@@ -5,6 +5,9 @@ on:
     - cron: "0 */6 * * *" # every 6 hours
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   update:
     runs-on: ubuntu-latest
@@ -50,9 +53,12 @@ jobs:
           EOF
 
       - name: Commit status.json
+        env:
+          GITHUB_TOKEN: ${ secrets.GITHUB_TOKEN }
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add status.json
           git commit -m "Update status [skip ci]" || echo "No changes"
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${github.repository}.git
           git push
