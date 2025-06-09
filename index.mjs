@@ -41,13 +41,11 @@ const main = async () => {
             lastThreeDayAct.push(event);
         }
     })
-    lastThreeDayAct.forEach(event => {
-        if(lastThreeDayAct.length == 0){
-            tamagitchi.pet.emotion = "sad";
-        } else {
-            tamagitchi.pet.emotion = "happy";
-        }
-    })
+    if (lastThreeDayAct.length == 0 ){ 
+        tamagitchi.pet.emotion = "sad";
+    } else {
+        tamagitchi.pet.emotion = "happy";
+    }
     lastDayAct.forEach(event => {
         if (userRes.data.followers > 1 || repoRes.data.stargazers_count > stats.stargazers_count){
             tamagitchi.pet.emotion = "excited";
@@ -59,10 +57,10 @@ const main = async () => {
             }
         } 
     })
-    // console.log(stats);
-    // console.log(userRes.data.followers);
-    // console.log(repoRes.data.stargazers_count);
-    // console.log(tamagitchi.pet.emotion);
+    console.log(stats);
+    console.log(userRes.data.followers);
+    console.log(repoRes.data.stargazers_count);
+    console.log(tamagitchi.pet.emotion);
 
     // update stats.json
     stats.followers = userRes.data.followers;
