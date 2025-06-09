@@ -27,6 +27,12 @@ jobs:
           npm install @octokit/rest
           npm install
 
+      - name: Update stats.json
+        env:
+          GITHUB_TOKEN: ${{ secrets.FGPA_TOKEN }}
+        run: |
+          node index.mjs
+
       - name: Commit stats.json
         run: |
           git config user.name "github-actions[bot]"
