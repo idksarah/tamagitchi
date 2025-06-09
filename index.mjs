@@ -1,7 +1,7 @@
 import { Octokit } from "octokit";
 import dotenv from "dotenv";
 import fs from "fs";
-import { tamagitchi } from "./tamagitchi.mjs";
+import { getEmotionUrl, tamagitchi } from "./tamagitchi.mjs";
 import { User } from "./user.mjs";
 import stats from "./stats.json" with {type: "json"};
 
@@ -58,15 +58,22 @@ const main = async () => {
             }
         } 
     })
-    console.log(stats);
-    console.log(userRes.data.followers);
-    console.log(repoRes.data.stargazers_count);
-    console.log(tamagitchi.pet.emotion);
 
     // update stats.json
     stats.followers = userRes.data.followers;
     stats.stars = repoRes.data.stargazers_count;
     fs.writeFileSync("./stats.json", JSON.stringify(stats, null, 2));
+
+    const readMeContent = generateReadme(tamagitchi.pet.emotion, getEmotionUrl(tamagitchi.pet.emotion));
+    
+    fs.writeFileSync("./README.md", readMeContent);
+
 };
+
+function generateReadme(emotion, url){
+    return ` [!tamagitchi[(${url}) <br>
+    tamagitchi is feeling ${emotion}!
+    `
+}
 
 main();
