@@ -25,7 +25,6 @@ jobs:
       - name: Install Octokit
         run: 
           npm install @octokit/rest
-          npm install
 
       - name: Generate stats.json
         env:
