@@ -11,7 +11,7 @@ const regEvents = ["PushEvent", "ReleaseEvent", "WatchEvent", "CommitCommentEven
 const socialEvents = ["ForkEvent", "IssueCommentEvent", "IssuesEvent", "PullRequestEvent", "PullRequestReviewEvent", "PullRequestReviewCommentEvent",  "PullRequestReviewThreadEvent", "MemberEvent"];
 
 const octokit = new Octokit({
-    auth: process.env.FGPA_TOKEN,
+    auth: process.env.GITHUB_TOKEN,
 });
 
 const DAY = 24 * 60 * 60 * 1000; 
