@@ -17,6 +17,10 @@ const highlightedRepo = "tamagitchi"; // let user choose!
 const regEvents = ["PushEvent", "ReleaseEvent", "WatchEvent", "CommitCommentEvent", "CreateEvent", "DeleteEvent", "GollumEvent", "PublicEvent"];
 const socialEvents = ["ForkEvent", "IssueCommentEvent", "IssuesEvent", "PullRequestEvent", "PullRequestReviewEvent", "PullRequestReviewCommentEvent",  "PullRequestReviewThreadEvent", "MemberEvent"];
 
+// Edit this to add your own README content!
+const otherContent= `
+<h1> hi!! i'm sarah</h1>
+<p> i like coding. sometimes :3 </p>`;
 const main = async () => {
     const userRes = await octokit.rest.users.getByUsername({username});
 
@@ -66,15 +70,12 @@ const main = async () => {
     fs.writeFileSync("./stats.json", JSON.stringify(stats, null, 2));
 
     // update README.md
-        const otherContent= `
-        <h1> hi!! i'm sarah</h1>
-        <p> i like coding. sometimes :3 </p>`;
-    const readMeContent = generateReadme(tamagitchi.pet.emotion, getEmotionUrl(tamagitchi.pet.emotion), Date(), otherContent);
+    const readMeContent = generateReadme(tamagitchi.pet.emotion, getEmotionUrl(tamagitchi.pet.emotion));
     fs.writeFileSync("./profile-repo/README.md", readMeContent);
 };
 
 
-function generateReadme(emotion, url, time, otherContent){
+function generateReadme(emotion, url){
     if (emotion == "excited"){
         return `
         <div>
@@ -83,7 +84,7 @@ function generateReadme(emotion, url, time, otherContent){
                 <img style="width: 75em;" src="${url}" alt="tamagitchi" /><br>
                 octocat is feeling ${emotion}!<br>
                 petting them can't make them any happier, but it sure will make ${username} happy! (<a href="https://github.com/${username}/${highlightedRepo}">star ${username}'s ${highlightedRepo}!! ⭐</a>)
-                <p>last updated at ${time.toString().toLowerCase()}</p>
+                <p>last updated at ${Date().toString().toLowerCase()}</p>
             </div>
         </div>`;
             ;
@@ -95,7 +96,7 @@ function generateReadme(emotion, url, time, otherContent){
                 <img style="width: 75em;" src="${url}" alt="tamagitchi" /><br>
                 octocat is feeling ${emotion}!<br>
                 pet them to make them excited! (<a href="https://github.com/${username}/${highlightedRepo}">star ${username}'s ${highlightedRepo}!! ⭐</a>)
-                <p>last updated at ${time.toString().toLowerCase()}</p>
+                <p>last updated at ${Date().toString().toLowerCase()}</p>
             </div>
         </div>`;
     }
