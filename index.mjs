@@ -78,10 +78,10 @@ const main = async () => {
 function generateReadme(emotion, url){
     if (emotion == "excited"){
         return ` ![tamagitchi](${url}) <br>
-        tamagitchi is feeling ${emotion}! pet them to make ${username} happy! (⭐ [star the repo](https://github.com/${username}/${highlightedRepo}))`;
+        tamagitchi is feeling ${emotion}! pet them to make ${username} happy! (⭐ [star ${username}'s ${highlightedRepo}!!](https://github.com/${username}/${highlightedRepo}))`;
     } else {
         return ` ![tamagitchi](${url}) <br>
-        tamagitchi is feeling ${emotion}. pet them to make them excited! (⭐ [star the repo](https://github.com/${username}/${highlightedRepo}))`;
+        tamagitchi is feeling ${emotion}. pet them to make them excited! (⭐ [star ${username}'s ${highlightedRepo}!!](https://github.com/${username}/${highlightedRepo}))`;
     }
 }
 
