@@ -30,7 +30,7 @@ const main = async () => {
          repo: highlightedRepo
      });
 
-    let recentAct = [], olderAct = []; // activity within last day and 3 days
+    let recentAct = [], olderAct = [];
 
     publicActivity.data.forEach(event => {
         let date = new Date(event.created_at);
@@ -40,6 +40,8 @@ const main = async () => {
             olderAct.push(event);
         }
     })
+
+    // sort recent activity into tamagitchi emotions
     if (recentAct.length != 0){
         if (userRes.data.followers > 1 || repoRes.data.stargazers_count > stats.stargazers_count){
             tamagitchi.pet.emotion = "excited";
@@ -63,26 +65,37 @@ const main = async () => {
     stats.stars = repoRes.data.stargazers_count;
     fs.writeFileSync("./stats.json", JSON.stringify(stats, null, 2));
 
-    // generate update README.md
-    const readMeContent = generateReadme(tamagitchi.pet.emotion, getEmotionUrl(tamagitchi.pet.emotion));
+    // update README.md
+    const otherContent= `
+    <div>
+        <h1> hi!! i'm sarah</h1>
+        <p> i like coding. sometimes :3 </p>
+    </div>`;
+    const readMeContent = generateReadme(tamagitchi.pet.emotion, getEmotionUrl(tamagitchi.pet.emotion), Date(), otherContent);
     fs.writeFileSync("./profile-repo/README.md", readMeContent);
 };
 
-function generateReadme(emotion, url){
+
+function generateReadme(emotion, url, time, otherContent){
     if (emotion == "excited"){
-        return `<div align="center">
-            <img src="${url}" alt="tamagitchi" /><br>
-            tamagitchi is feeling ${emotion}!<br>
-            petting them can't make them any happier, but it sure will make ${username} happy! (<a href="https://github.com/${username}/${highlightedRepo}">star ${username}'s ${highlightedRepo}!! ⭐</a>)
+        return `
+            ${otherContent}
+            <div align="center">
+                <img style="width: 75em;" src="${url}" alt="tamagitchi" /><br>
+                octocat is feeling ${emotion}!<br>
+                petting them can't make them any happier, but it sure will make ${username} happy! (<a href="https://github.com/${username}/${highlightedRepo}">star ${username}'s ${highlightedRepo}!! ⭐</a>)
+                <p>last updated at ${time.toString().toLowerCase()}</p>
             </div>`;
             ;
     } else {
-        return `<div align="center">
-        <img src="${url}" alt="tamagitchi" /><br>
-        tamagitchi is feeling ${emotion}!<br>
-        pet them to make them excited! (<a href="https://github.com/${username}/${highlightedRepo}">star ${username}'s ${highlightedRepo}!! ⭐</a>)
-        </div>`;
-
+        return `
+            ${otherContent}
+            <div align="center">
+                <img style="width: 75em;" src="${url}" alt="tamagitchi" /><br>
+                octocat is feeling ${emotion}!<br>
+                pet them to make them excited! (<a href="https://github.com/${username}/${highlightedRepo}">star ${username}'s ${highlightedRepo}!! ⭐</a>)
+                <p>last updated at ${time.toString().toLowerCase()}</p>
+            </div>`;
     }
 }
 
