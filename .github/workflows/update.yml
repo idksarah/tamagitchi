@@ -12,8 +12,6 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-    runs-on: ubuntu-latest
-    steps:
       - name: Echo secret length
         run: echo "Secret length ${#FGPA_TOKEN}"
         env:
