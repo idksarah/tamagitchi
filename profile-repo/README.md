@@ -1,2 +1,2 @@
- ![tamagitchi](https://hc-cdn.hel1.your-objectstorage.com/s/v3/cb454fd059e43c4349e5563c2c13d7bcdb2c0950_image.png) <br>
-        tamagitchi is feeling excited! pet them to make idksarah happy! (star github.com/idksarah/tamagitchi)
+ ![tamagitchi](./emotions/excited.gif) <br>
+        tamagitchi is feeling excited! pet them to make idksarah happy! (⭐ [star idksarah's tamagitchi!!](https://github.com/idksarah/tamagitchi))
