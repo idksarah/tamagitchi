@@ -20,6 +20,8 @@ jobs:
       - name: Checkout profile repo
         # uses: actions/checkout@v3
         run: echo "Token length is ${FGPA_TOKEN}"
+        env:
+          FGPA_TOKEN: ${{ secrets.FGPA_TOKEN }}
         # with:
         #   repository: idksarah/idksarah
         #   token: ${{ secrets.FGPA_TOKEN }}
