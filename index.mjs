@@ -67,10 +67,8 @@ const main = async () => {
 
     // update README.md
     const otherContent= `
-    <div>
         <h1> hi!! i'm sarah</h1>
-        <p> i like coding. sometimes :3 </p>
-    </div>`;
+        <p> i like coding. sometimes :3 </p>`;
     const readMeContent = generateReadme(tamagitchi.pet.emotion, getEmotionUrl(tamagitchi.pet.emotion), Date(), otherContent);
     fs.writeFileSync("./profile-repo/README.md", readMeContent);
 };
