@@ -4,6 +4,9 @@ Tamagitchi is a cute Github README add-on to allow you to stand out from other u
 
 # Usage
 
+### (Optional) Enable autoplay (on your personal system)
+Head to (https://github.com/settings/accessibility) and enable autoplay!
+
 # Examples
  ![tamagitchi](./emotions/excited.gif) <br>
     tamagitchi is feeling excited! pet them to make idksarah happy! (⭐ [star idksarah's tamagitchi!!](https://github.com/idksarah/tamagitchi))
