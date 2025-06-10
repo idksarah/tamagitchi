@@ -12,6 +12,13 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo secret length
+        run: echo "Secret length: ${#FGPA_TOKEN}"
+        env:
+          FGPA_TOKEN: ${{ secrets.FGPA_TOKEN }}
+          
       - name: Checkout tamagitchi repo
         uses: actions/checkout@v3
         with:
