@@ -21,7 +21,6 @@ const highlightedRepo = "tamagitchi"; // let user choose!
 
 const main = async () => {
     const userRes = await octokit.rest.users.getByUsername({username});
-    console.log("Authenticated as:", userRes.data.login);
 
     const publicActivity = await octokit.rest.activity.listPublicEventsForUser({
         username: `${userRes.data.login}`,
@@ -33,21 +32,21 @@ const main = async () => {
          repo: highlightedRepo
      });
 
+     console.log(publicActivity);
+
     let lastDayAct = [], lastThreeDayAct = []; // activity within last day and 3 days
+
     publicActivity.data.forEach(event => {
-        let date = new Date(event.created_at.substring(0,10));
-        if(date.getTime() > Date.now() - DAY){ // within last day
+        let date = new Date(event.created_at);
+        if(date.getTime() >= Date.now() - DAY){ // within last day
             lastDayAct.push(event);
-        } else if (date.getTime() > Date.now() - 3 * DAY){ // within last 3 days
+        } else if (date.getTime() >= Date.now() - 3 * DAY){ // within last 3 days
             lastThreeDayAct.push(event);
         }
     })
-    if (lastThreeDayAct.length == 0 ){ 
-        tamagitchi.pet.emotion = "sad";
-    } else {
-        tamagitchi.pet.emotion = "neutral";
-    }
-    lastDayAct.forEach(event => {
+    console.log(lastDayAct.length);
+    console.log(lastThreeDayAct.length);
+    if (lastDayAct.length != 0){
         if (userRes.data.followers > 1 || repoRes.data.stargazers_count > stats.stargazers_count){
             tamagitchi.pet.emotion = "excited";
         } else if(lastDayAct.length >= 1){
@@ -57,7 +56,13 @@ const main = async () => {
                 tamagitchi.pet.emotion = "happy";
             }
         } 
-    })
+    } else {
+        if (lastThreeDayAct.length == 0 ){ 
+            tamagitchi.pet.emotion = "sad";
+        } else {
+            tamagitchi.pet.emotion = "neutral";
+        }
+    }
 
     // update stats.json
     stats.followers = userRes.data.followers;
@@ -65,6 +70,7 @@ const main = async () => {
     fs.writeFileSync("./stats.json", JSON.stringify(stats, null, 2));
 
     const readMeContent = generateReadme(tamagitchi.pet.emotion, getEmotionUrl(tamagitchi.pet.emotion));
+    console.log(readMeContent);
     
     fs.writeFileSync("./profile-repo/README.md", readMeContent);
 };
@@ -75,7 +81,7 @@ function generateReadme(emotion, url){
         tamagitchi is feeling ${emotion}! pet them to make ${username} happy! (star github.com/${username}/${highlightedRepo})`;
     } else {
         return ` ![tamagitchi](${url}) <br>
-        tamagitchi is feeling ${emotion}! pet them to make them excited! (star github.com/${username}/${highlightedRepo})`;
+        tamagitchi is feeling ${emotion}. pet them to make them excited! (star github.com/${username}/${highlightedRepo})`;
     }
 }
 
