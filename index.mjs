@@ -45,7 +45,7 @@ const main = async () => {
     if (lastThreeDayAct.length == 0 ){ 
         tamagitchi.pet.emotion = "sad";
     } else {
-        tamagitchi.pet.emotion = "happy";
+        tamagitchi.pet.emotion = "neutral";
     }
     lastDayAct.forEach(event => {
         if (userRes.data.followers > 1 || repoRes.data.stargazers_count > stats.stargazers_count){
@@ -70,8 +70,13 @@ const main = async () => {
 };
 
 function generateReadme(emotion, url){
-    return ` ![tamagitchi](${url}) <br>
-    tamagitchi is feeling ${emotion}!`
+    if (emotion == "sad"){
+        return ` ![tamagitchi](${url}) <br>
+        tamagitchi is feeling ${emotion}! pet them to make them excited! (star github.com/${highlightedRepo})`;
+    } else {
+        return ` ![tamagitchi](${url}) <br>
+        tamagitchi is feeling ${emotion}!`;
+    }
 }
 
 main();

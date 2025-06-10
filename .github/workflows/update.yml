@@ -12,11 +12,6 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-      - name: Echo secret length
-        run: echo "Secret length ${#FGPA_TOKEN}"
-        env:
-          FGPA_TOKEN: ${{ secrets.FGPA_TOKEN }}
-
       - name: Checkout tamagitchi repo
         uses: actions/checkout@v3
         with:
@@ -24,11 +19,8 @@ jobs:
 
       - name: Checkout profile repo
         uses: actions/checkout@v3
-        # # run: echo "Token length is ${FGPA_TOKEN}"
-        # env:
-        #   FGPA_TOKEN: ${{ secrets.FGPA_TOKEN }}
         with:
-          repository: idksarah/idksarah
+          repository: idksarah/idksarah #replace with "your_user/your_user"
           token: ${{ secrets.FGPA_TOKEN }}
           path: profile-repo
           fetch-depth: 0
