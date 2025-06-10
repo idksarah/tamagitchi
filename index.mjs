@@ -77,11 +77,19 @@ const main = async () => {
 
 function generateReadme(emotion, url){
     if (emotion == "excited"){
-        return ` ![tamagitchi](${url}) <br>
-        tamagitchi is feeling ${emotion}! pet them to make ${username} happy! (⭐ [star ${username}'s ${highlightedRepo}!!](https://github.com/${username}/${highlightedRepo}))`;
+        return `<div align="center">
+            <img src="${url}" alt="tamagitchi" /><br>
+            tamagitchi is feeling ${emotion}!<br>
+            petting them can't make them any happier, but it sure will make ${username} happy! (<a href="https://github.com/${username}/${highlightedRepo}">star ${username}'s ${highlightedRepo}!! ⭐</a>)
+            </div>`;
+            ;
     } else {
-        return ` ![tamagitchi](${url}) <br>
-        tamagitchi is feeling ${emotion}. pet them to make them excited! (⭐ [star ${username}'s ${highlightedRepo}!!](https://github.com/${username}/${highlightedRepo}))`;
+        return `<div align="center">
+        <img src="${url}" alt="tamagitchi" /><br>
+        tamagitchi is feeling ${emotion}!<br>
+        pet them to make them excited! (<a href="https://github.com/${username}/${highlightedRepo}">star ${username}'s ${highlightedRepo}!! ⭐</a>)
+        </div>`;
+
     }
 }
 
