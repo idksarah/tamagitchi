@@ -23,15 +23,15 @@ jobs:
           fetch-depth: 0
 
       - name: Checkout profile repo
-        # uses: actions/checkout@v3
-        run: echo "Token length is ${FGPA_TOKEN}"
-        env:
-          FGPA_TOKEN: ${{ secrets.FGPA_TOKEN }}
-        # with:
-        #   repository: idksarah/idksarah
-        #   token: ${{ secrets.FGPA_TOKEN }}
-        #   path: profile-repo
-        #   fetch-depth: 0
+        uses: actions/checkout@v3
+        # # run: echo "Token length is ${FGPA_TOKEN}"
+        # env:
+        #   FGPA_TOKEN: ${{ secrets.FGPA_TOKEN }}
+        with:
+          repository: idksarah/idksarah
+          token: ${{ secrets.FGPA_TOKEN }}
+          path: profile-repo
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v3
