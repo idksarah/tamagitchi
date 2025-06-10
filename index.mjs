@@ -66,34 +66,28 @@ const main = async () => {
     fs.writeFileSync("./stats.json", JSON.stringify(stats, null, 2));
 
     // update README.md
-    const otherContent= `
-        <h1> hi!! i'm sarah</h1>
-        <p> i like coding. sometimes :3 </p>`;
-    const readMeContent = generateReadme(tamagitchi.pet.emotion, getEmotionUrl(tamagitchi.pet.emotion), Date(), otherContent);
+    const otherContent= ``;
+    const readMeContent = generateReadme(tamagitchi.pet.emotion, getEmotionUrl(tamagitchi.pet.emotion), Date());
     fs.writeFileSync("./profile-repo/README.md", readMeContent);
 };
 
 
-function generateReadme(emotion, url, time, otherContent){
+function generateReadme(emotion, url, time){
     if (emotion == "excited"){
-        return `
-            ${otherContent}
-            <div align="center">
-                <img style="width: 75em;" src="${url}" alt="tamagitchi" /><br>
-                octocat is feeling ${emotion}!<br>
-                petting them can't make them any happier, but it sure will make ${username} happy! (<a href="https://github.com/${username}/${highlightedRepo}">star ${username}'s ${highlightedRepo}!! ⭐</a>)
-                <p>last updated at ${time.toString().toLowerCase()}</p>
+        return `<div align="center">
+            <img style="width: 75em;" src="${url}" alt="tamagitchi" /><br>
+            octocat is feeling ${emotion}!<br>
+            petting them can't make them any happier, but it sure will make ${username} happy! (<a href="https://github.com/${username}/${highlightedRepo}">star ${username}'s ${highlightedRepo}!! ⭐</a>)
+            <p>last updated at ${time.toString().toLowerCase()}</p>
             </div>`;
             ;
     } else {
-        return `
-            ${otherContent}
-            <div align="center">
-                <img style="width: 75em;" src="${url}" alt="tamagitchi" /><br>
-                octocat is feeling ${emotion}!<br>
-                pet them to make them excited! (<a href="https://github.com/${username}/${highlightedRepo}">star ${username}'s ${highlightedRepo}!! ⭐</a>)
-                <p>last updated at ${time.toString().toLowerCase()}</p>
-            </div>`;
+        return `<div align="center">
+            <img style="width: 75em;" src="${url}" alt="tamagitchi" /><br>
+            octocat is feeling ${emotion}!<br>
+            pet them to make them excited! (<a href="https://github.com/${username}/${highlightedRepo}">star ${username}'s ${highlightedRepo}!! ⭐</a>)
+            <p>last updated at ${time.toString().toLowerCase()}</p>
+        </div>`;
     }
 }
 
