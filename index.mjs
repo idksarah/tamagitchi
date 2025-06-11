@@ -2,7 +2,6 @@ import { Octokit } from "octokit";
 import dotenv from "dotenv";
 import fs from "fs";
 import { getEmotionUrl, tamagitchi } from "./tamagitchi.mjs";
-import { User } from "./user.mjs";
 import stats from "./stats.json" with {type: "json"};
 
 dotenv.config();
@@ -12,21 +11,22 @@ const octokit = new Octokit({
 });
 
 const DAY = 24 * 60 * 60 * 1000; 
-const username = "idksarah";
-const highlightedRepo = "tamagitchi"; // let user choose!
-const regEvents = ["PushEvent", "ReleaseEvent", "WatchEvent", "CommitCommentEvent", "CreateEvent", "DeleteEvent", "GollumEvent", "PublicEvent"];
-const socialEvents = ["ForkEvent", "IssueCommentEvent", "IssuesEvent", "PullRequestEvent", "PullRequestReviewEvent", "PullRequestReviewCommentEvent",  "PullRequestReviewThreadEvent", "MemberEvent"];
 
-// Edit this to add your own README content!
+// !! edit this to your username and the name of the repo you'd like to highlight :3
+const username = "idksarah";
+const highlightedRepo = "tamagitchi";
+
+// !! edit this to add your own README content!
 const otherContent= `
 <h1> hi!! i'm sarah</h1>
 <p> i like coding. sometimes :3 </p>`;
+
 const main = async () => {
     const userRes = await octokit.rest.users.getByUsername({username});
 
     const publicActivity = await octokit.rest.activity.listPublicEventsForUser({
         username: `${userRes.data.login}`,
-        per_page: 10
+        per_page: 20
     });
 
     const repoRes = await octokit.rest.repos.get({
@@ -36,14 +36,21 @@ const main = async () => {
 
     let recentAct = [], olderAct = [];
 
+    // console.log(publicActivity);
+
     publicActivity.data.forEach(event => {
         let date = new Date(event.created_at);
-        if(date.getTime() >= Date.now() - DAY / 12){ // within last 2 hours
+        console.log(date.getTime());
+        if(date.getTime() >= (Date.now() - DAY / 2)){
             recentAct.push(event);
-        } else if (date.getTime() >= Date.now() - 3 * DAY){ // within last 3 days
+        } else if (date.getTime() >= (Date.now() - 3 * DAY)){
             olderAct.push(event);
         }
     })
+    // console.log(Date.now());
+
+    console.log(recentAct.length);
+    console.log(olderAct.length);
 
     // sort recent activity into tamagitchi emotions
     if (recentAct.length != 0){
@@ -65,13 +72,18 @@ const main = async () => {
     }
 
     // update stats.json
-    stats.followers = userRes.data.followers;
-    stats.stars = repoRes.data.stargazers_count;
-    fs.writeFileSync("./stats.json", JSON.stringify(stats, null, 2));
+    if (Date.now() > stats.lastUpdated - DAY / 12){
+        stats.lastUpdated = Date.now();
+        stats.followers = userRes.data.followers;
+        stats.stars = repoRes.data.stargazers_count;
+        fs.writeFileSync("./stats.json", JSON.stringify(stats, null, 2));
+    }
 
     // update README.md
     const readMeContent = generateReadme(tamagitchi.pet.emotion, getEmotionUrl(tamagitchi.pet.emotion));
     fs.writeFileSync("./profile-repo/README.md", readMeContent);
+
+    console.log(tamagitchi.pet.emotion);
 };
 
 
@@ -79,7 +91,9 @@ function generateReadme(emotion, url){
     if (emotion == "excited"){
         return `
         <div>
-            ${otherContent}
+            <div>
+                ${otherContent}
+            </div>
             <div align="center">
                 <img style="width: 75em;" src="${url}" alt="tamagitchi" /><br>
                 octocat is feeling ${emotion}!<br>
@@ -91,7 +105,9 @@ function generateReadme(emotion, url){
     } else {
         return `
         <div>
-            ${otherContent}
+            <div>
+                ${otherContent}
+            </div>
             <div align="center">
                 <img style="width: 75em;" src="${url}" alt="tamagitchi" /><br>
                 octocat is feeling ${emotion}!<br>
@@ -101,3 +117,4 @@ function generateReadme(emotion, url){
         </div>`;
     }
 }
+main();
