@@ -2,6 +2,7 @@
 ![logo](./graphics/tamagitchi.jpg)
 tamagitchi is a cute Github README add-on to allow you to stand out from other users. Visitors can watch your activity by watching your tamagitchi and you can also promote your own repositories! idk bru
 
+ ![tamagitchi](./graphics/emotions/happy.gif) <br>
 # usage (under construction!)
 ### fork this repository
 ### if you don't already have one, create a profile repository-- a repository named your username. eg, your_user creates a repo named your_user. idksarah creates a repo called idksarah. this will host your special README.md

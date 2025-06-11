@@ -12,7 +12,7 @@ const octokit = new Octokit({
 
 const DAY = 24 * 60 * 60 * 1000; 
 
-// !! edit this to your username and the name of the repo you'd like to highlight :3
+// !! edit this to your username and the name of the repo you'd like to highlight
 const username = "idksarah";
 const highlightedRepo = "tamagitchi";
 
@@ -26,7 +26,7 @@ const main = async () => {
 
     const publicActivity = await octokit.rest.activity.listPublicEventsForUser({
         username: `${userRes.data.login}`,
-        per_page: 20
+        per_page: 10
     });
 
     const repoRes = await octokit.rest.repos.get({
@@ -36,28 +36,21 @@ const main = async () => {
 
     let recentAct = [], olderAct = [];
 
-    // console.log(publicActivity);
-
     publicActivity.data.forEach(event => {
         let date = new Date(event.created_at);
-        console.log(date.getTime());
-        if(date.getTime() >= (Date.now() - DAY / 2)){
+        if(date.getTime() >= (Date.now() - (DAY))){
             recentAct.push(event);
         } else if (date.getTime() >= (Date.now() - 3 * DAY)){
             olderAct.push(event);
         }
     })
-    // console.log(Date.now());
-
-    console.log(recentAct.length);
-    console.log(olderAct.length);
 
     // sort recent activity into tamagitchi emotions
     if (recentAct.length != 0){
         if (userRes.data.followers > 1 || repoRes.data.stargazers_count > stats.stargazers_count){
             tamagitchi.pet.emotion = "excited";
         } else if(recentAct.length >= 1){
-            if(recentAct.length >= 5){
+            if(recentAct.length >= 15){
                 tamagitchi.pet.emotion = "excited";
             } else {
                 tamagitchi.pet.emotion = "happy";
@@ -72,7 +65,7 @@ const main = async () => {
     }
 
     // update stats.json
-    if (Date.now() > stats.lastUpdated - DAY / 12){
+    if (Date.now() > (stats.lastUpdated + DAY)){
         stats.lastUpdated = Date.now();
         stats.followers = userRes.data.followers;
         stats.stars = repoRes.data.stargazers_count;
