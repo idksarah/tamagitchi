@@ -22,6 +22,19 @@ const otherContent= `<h1> hi!! i'm sarah</h1>
 <p> find me on the hackclub slack @idksarah!</p>
 <hr class="solid">`;
 
+const excitedContent=`
+<p>octocat is feeling excited because ${username} received a follow or star!</p>
+<p>petting them can't make them any happier, but it sure will make ${username} happy! (<a href="https://github.com/${username}/${highlightedRepo}">star ${username}'s ${highlightedRepo}!! ⭐</a>)</p>`;
+const happyContent=`
+<p>octocat is feeling happy because ${username} has made >= one commit today!</p>
+<p>pet them to make them excited! (<a href="https://github.com/${username}/${highlightedRepo}">star ${username}'s ${highlightedRepo}!! ⭐</a>)</p>`;
+const neutralContent=`
+<p>octocat is feeling neutral because ${username} hasn't made a commit <i>today</i> but has made >= one commit in the <i>past three days</i>.</p>
+<p>pet them to make them excited! (<a href="https://github.com/${username}/${highlightedRepo}">star ${username}'s ${highlightedRepo}!! ⭐</a>)</p>`;
+const sadContent=`
+<p>octocat is feeling excited because ${username} hasn't had any activity in the <i>past three days</i>.</p>
+<p>pet them to make them excited! (<a href="https://github.com/${username}/${highlightedRepo}">star ${username}'s ${highlightedRepo}!! ⭐</a>)</p>`;
+
 const main = async () => {
     const userRes = await octokit.rest.users.getByUsername({username});
 
@@ -46,10 +59,7 @@ const main = async () => {
         }
     })
 
-    console.log(recentAct.length);
-    console.log(olderAct.length);
-
-    // sort recent activity into tamagitchi emotions
+    // sort activity into emotions
     if (recentAct.length != 0){
         if (userRes.data.followers > stats.followers || repoRes.data.stargazers_count > stats.stargazers_count){
             tamagitchi.pet.emotion = "excited";
@@ -82,28 +92,33 @@ const main = async () => {
     fs.writeFileSync("./profile-repo/README.md", readMeContent);
 
     console.log(tamagitchi.pet.emotion);
+    console.log(recentAct.length);
+    console.log(olderAct.length);
 };
 
 
 function generateReadme(emotion, url, time){
-    if (emotion == "excited"){
-        return `${otherContent}
-            <div align="center">
-                <img style="width: 50em;" src="${url}" alt="tamagitchi" /><br>
-                octocat is feeling ${emotion}!<br>
-                petting them can't make them any happier, but it sure will make ${username} happy! (<a href="https://github.com/${username}/${highlightedRepo}">star ${username}'s ${highlightedRepo}!! ⭐</a>)
-                <p>last updated: ${time} pst</p>
-            </div>
-        </div>`;
-    } else {
-        return `${otherContent}
-            <div align="center">
-                <img style="width: 50em;" src="${url}" alt="tamagitchi" /><br>
-                octocat is feeling ${emotion}!<br>
-                pet them to make them excited! (<a href="https://github.com/${username}/${highlightedRepo}">star ${username}'s ${highlightedRepo}!! ⭐</a>)
-                <p>last updated: ${time} pst</p>
-            </div>
-        </div>`;
+    let emotionContent;
+    switch (emotion){
+        case "excited":
+            emotionContent = excitedContent;
+            break;
+        case "happy":
+            emotionContent = happyContent;
+            break;
+        case "neutral":
+            emotionContent = neutralContent;
+            break;
+        case "sad":
+            emotionContent = sadContent;
     }
+
+    return `${otherContent}
+<div align="center">
+<img style="width: 50em;" src="${url}" alt="tamagitchi" /><br>
+${emotionContent}
+
+<p>last updated: ${time} pst</p>
+</div>`;
 }
 main();
