@@ -6,6 +6,6 @@
                 <img style="width: 50em;" src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/0205ed49bbf9d97b25b0e1133752f37100932990_sad.gif" alt="tamagitchi" /><br>
                 octocat is feeling sad!<br>
                 pet them to make them excited! (<a href="https://github.com/idksarah/tamagitchi">star idksarah's tamagitchi!! ⭐</a>)
-                <p>last updated at tue jun 10 2025 19:45:52 gmt-0700 (pacific daylight time)</p>
+                <p>last updated at 00:05 pst</p>
             </div>
         </div>
