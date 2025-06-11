@@ -17,60 +17,61 @@ const username = "idksarah";
 const highlightedRepo = "tamagitchi";
 
 // !! edit this to add your own README content!
-const otherContent= `
-<h1> hi!! i'm sarah</h1>
-<p> i like coding. sometimes :3 </p>`;
+const otherContent= `<h1> hi!! i'm sarah</h1>
+<p> i like coding. sometimes :3 </p>
+<p> find me on the hackclub slack @idksarah!</p>
+<hr class="solid">`;
 
 const main = async () => {
-    const userRes = await octokit.rest.users.getByUsername({username});
+    // const userRes = await octokit.rest.users.getByUsername({username});
 
-    const publicActivity = await octokit.rest.activity.listPublicEventsForUser({
-        username: `${userRes.data.login}`,
-        per_page: 10
-    });
+    // const publicActivity = await octokit.rest.activity.listPublicEventsForUser({
+    //     username: `${userRes.data.login}`,
+    //     per_page: 10
+    // });
 
-    const repoRes = await octokit.rest.repos.get({
-         owner: `${userRes.data.login}`,
-         repo: highlightedRepo
-     });
+    // const repoRes = await octokit.rest.repos.get({
+    //      owner: `${userRes.data.login}`,
+    //      repo: highlightedRepo
+    //  });
 
-    let recentAct = [], olderAct = [];
+    // let recentAct = [], olderAct = [];
 
-    publicActivity.data.forEach(event => {
-        let date = new Date(event.created_at);
-        if(date.getTime() >= (Date.now() - (DAY))){
-            recentAct.push(event);
-        } else if (date.getTime() >= (Date.now() - 3 * DAY)){
-            olderAct.push(event);
-        }
-    })
+    // publicActivity.data.forEach(event => {
+    //     let date = new Date(event.created_at);
+    //     if(date.getTime() >= (Date.now() - (DAY))){
+    //         recentAct.push(event);
+    //     } else if (date.getTime() >= (Date.now() - 3 * DAY)){
+    //         olderAct.push(event);
+    //     }
+    // })
 
-    // sort recent activity into tamagitchi emotions
-    if (recentAct.length != 0){
-        if (userRes.data.followers > 1 || repoRes.data.stargazers_count > stats.stargazers_count){
-            tamagitchi.pet.emotion = "excited";
-        } else if(recentAct.length >= 1){
-            if(recentAct.length >= 15){
-                tamagitchi.pet.emotion = "excited";
-            } else {
-                tamagitchi.pet.emotion = "happy";
-            }
-        } 
-    } else {
-        if (olderAct.length == 0 ){ 
-            tamagitchi.pet.emotion = "sad";
-        } else {
-            tamagitchi.pet.emotion = "neutral";
-        }
-    }
+    // // sort recent activity into tamagitchi emotions
+    // if (recentAct.length != 0){
+    //     if (userRes.data.followers > 1 || repoRes.data.stargazers_count > stats.stargazers_count){
+    //         tamagitchi.pet.emotion = "excited";
+    //     } else if(recentAct.length >= 1){
+    //         if(recentAct.length >= 15){
+    //             tamagitchi.pet.emotion = "excited";
+    //         } else {
+    //             tamagitchi.pet.emotion = "happy";
+    //         }
+    //     } 
+    // } else {
+    //     if (olderAct.length == 0 ){ 
+    //         tamagitchi.pet.emotion = "sad";
+    //     } else {
+    //         tamagitchi.pet.emotion = "neutral";
+    //     }
+    // }
 
-    // update stats.json
-    if (Date.now() > (stats.lastUpdated + DAY)){
-        stats.lastUpdated = Date.now();
-        stats.followers = userRes.data.followers;
-        stats.stars = repoRes.data.stargazers_count;
-        fs.writeFileSync("./stats.json", JSON.stringify(stats, null, 2));
-    }
+    // // update stats.json
+    // if (Date.now() > (stats.lastUpdated + DAY)){
+    //     stats.lastUpdated = Date.now();
+    //     stats.followers = userRes.data.followers;
+    //     stats.stars = repoRes.data.stargazers_count;
+    //     fs.writeFileSync("./stats.json", JSON.stringify(stats, null, 2));
+    // }
 
     // update README.md
     const readMeContent = generateReadme(tamagitchi.pet.emotion, getEmotionUrl(tamagitchi.pet.emotion));
@@ -82,27 +83,18 @@ const main = async () => {
 
 function generateReadme(emotion, url){
     if (emotion == "excited"){
-        return `
-        <div>
-            <div>
-                ${otherContent}
-            </div>
+        return `${otherContent}
             <div align="center">
-                <img style="width: 75em;" src="${url}" alt="tamagitchi" /><br>
+                <img style="width: 50em;" src="${url}" alt="tamagitchi" /><br>
                 octocat is feeling ${emotion}!<br>
                 petting them can't make them any happier, but it sure will make ${username} happy! (<a href="https://github.com/${username}/${highlightedRepo}">star ${username}'s ${highlightedRepo}!! ⭐</a>)
                 <p>last updated at ${Date().toString().toLowerCase()}</p>
             </div>
         </div>`;
-            ;
     } else {
-        return `
-        <div>
-            <div>
-                ${otherContent}
-            </div>
+        return `${otherContent}
             <div align="center">
-                <img style="width: 75em;" src="${url}" alt="tamagitchi" /><br>
+                <img style="width: 50em;" src="${url}" alt="tamagitchi" /><br>
                 octocat is feeling ${emotion}!<br>
                 pet them to make them excited! (<a href="https://github.com/${username}/${highlightedRepo}">star ${username}'s ${highlightedRepo}!! ⭐</a>)
                 <p>last updated at ${Date().toString().toLowerCase()}</p>
