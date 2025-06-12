@@ -34,8 +34,14 @@ tamagitchi is a cute Github README add-on to allow you to stand out from other u
 - open .github/workflows/update.yml
 - edit any section prefaced by *!!* otherwise. dont. edit!
 - in update.yml, you'll have to replace the repository line with your username (eg your_user/your_user)
-### (optional) Enable autoplay (on your personal system)
-head to (https://github.com/settings/accessibility) and enable autoplay!
+### that should be it! if you're interested in testing, though:
+- head to your forked version of tamagitchi and go to actions.
+- click on "Update"
+- run workflow on branch main
+- wait ~15 seconds. check your profile. you should have your very own tamagitchi ! :D
+### (optional) enable autoplay
+- head to (https://github.com/settings/accessibility) and enable autoplay!
+- disclaimer: this only enables on your own system!
 
 # examples
  ![tamagitchi](./graphics/emotions/excited.gif) <br>

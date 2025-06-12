@@ -4,14 +4,6 @@ import fs, { stat } from "fs";
 import { getEmotionUrl, tamagitchi } from "./tamagitchi.mjs";
 import stats from "./stats.json" with {type: "json"};
 
-dotenv.config();
-
-const octokit = new Octokit({
-    auth: process.env.GITHUB_TOKEN,
-});
-
-const DAY = 24 * 60 * 60 * 1000; 
-
 // !! add your username and the name of the repo you'd like to highlight
 const username = "idksarah";
 const highlightedRepo = "tamagitchi";
@@ -21,6 +13,14 @@ const otherContent= `<h1> hi!! i'm sarah</h1>
 <p> i like coding. sometimes :3 </p>
 <p> find me on the hackclub slack @idksarah!</p>
 <hr class="solid">`;
+
+dotenv.config();
+
+const octokit = new Octokit({
+    auth: process.env.GITHUB_TOKEN,
+});
+
+const DAY = 24 * 60 * 60 * 1000; 
 
 const excitedContent=`
 <p>octocat is feeling excited because ${username} received a star on <i>${highlightedRepo}</i>!</p>
