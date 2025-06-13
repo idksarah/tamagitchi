@@ -61,7 +61,7 @@ const main = async () => {
         console.log("huh");
         const publicActivity = await octokit.rest.activity.listPublicEventsForUser({
             username: `${userRes.data.login}`,
-            per_page: 5 // adjust later
+            per_page: 15 
         });
 
         let recentAct = [], olderAct = [];
@@ -77,11 +77,7 @@ const main = async () => {
 
         // sort activity into emotions
         if (recentAct.length != 0){if(recentAct.length >= 1){
-            if(recentAct.length >= 15){
-                tamagitchi.pet.emotion = "excited";
-            } else {
-                tamagitchi.pet.emotion = "happy";
-            }
+            tamagitchi.pet.emotion = "happy";
             } 
         } else {
             if (olderAct.length == 0 ){ 
