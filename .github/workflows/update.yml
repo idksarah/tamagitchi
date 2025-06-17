@@ -20,7 +20,7 @@ jobs:
       - name: Checkout profile repo
         uses: actions/checkout@v3
         with:
-          repository: idksarah/idksarah # !! replace with "your_user/your_user"
+          repository: rkdune/rkdune # !! replace with "your_user/your_user"
           token: ${{ secrets.FGPA_TOKEN }}
           path: profile-repo
           fetch-depth: 0

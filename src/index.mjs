@@ -5,8 +5,8 @@ import { getEmotionUrl, tamagitchi } from "./tamagitchi.mjs";
 import stats from "./stats.json" with {type: "json"};
 
 // !! add your username and the name of the repo you'd like to highlight
-const username = "idksarah";
-const highlightedRepo = "tamagitchi";
+const username = "rkdune";
+const highlightedRepo = "tinygraphs";
 
 // !! add your own README content here!
 const otherContent= `<h2> rohan kalia </h2>
