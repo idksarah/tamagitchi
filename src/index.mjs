@@ -9,7 +9,7 @@ const username = "rkdune";
 const highlightedRepo = "tinygraphs";
 
 // !! add your own README content here!
-const otherContent= `<h2> rohan kalia </h2>
+const otherContent= `<h2> Rohan Kalia </h2>
 <p> builder at heart. </p>`;
 
 dotenv.config();
@@ -21,17 +21,13 @@ const octokit = new Octokit({
 const DAY = 24 * 60 * 60 * 1000; 
 
 const excitedContent=`
-<p>octocat is feeling excited because ${username} received a star on <i>${highlightedRepo}</i>!</p>
-<p>petting them can't make them any happier, but it sure will make ${username} happy! (<a href="https://github.com/${username}/${highlightedRepo}">star ${username}'s ${highlightedRepo}!! ⭐</a>)</p>`;
+<p>octocat is feeling excited because ${username} received a star on <i>${highlightedRepo}</i>!</p>`;
 const happyContent=`
-<p>octocat is feeling happy because ${username} has made >= one commit today!</p>
-<p>pet them to make them excited! (<a href="https://github.com/${username}/${highlightedRepo}">star ${username}'s ${highlightedRepo}!! ⭐</a>)</p>`;
+<p>octocat is feeling happy because ${username} has made >= one commit today!</p>`;
 const neutralContent=`
-<p>octocat is feeling neutral because ${username} hasn't made a commit <i>today</i> but has made >= one commit in the <i>past three days</i>.</p>
-<p>pet them to make them excited! (<a href="https://github.com/${username}/${highlightedRepo}">star ${username}'s ${highlightedRepo}!! ⭐</a>)</p>`;
+<p>octocat is feeling neutral because ${username} hasn't made a commit <i>today</i> but has made >= one commit in the <i>past three days</i>.</p>`;
 const sadContent=`
-<p>octocat is feeling excited because ${username} hasn't had any activity in the <i>past three days</i>.</p>
-<p>pet them to make them excited! (<a href="https://github.com/${username}/${highlightedRepo}">star ${username}'s ${highlightedRepo}!! ⭐</a>)</p>`;
+<p>octocat is feeling excited because ${username} hasn't had any activity in the <i>past three days</i>.</p>`;
 
 const updateFrequency = 24;
 
