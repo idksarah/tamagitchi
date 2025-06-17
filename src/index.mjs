@@ -123,10 +123,10 @@ function updateReadme(emotion, url){
     const time = Date().toString().toLowerCase().substring(16,21);
     const readMeContent = `${otherContent}
 <div align="center">
-<img style="width: 50em;" src="${url}" alt="tamagitchi" /><br>
+<img style="width: 25em;" src="${url}" alt="tamagitchi" /><br>
 ${emotionContent}
 
-<p>last updated: ${time} utc | tamagitchi takes 1-2 minutes to update, please be patient <3 </p>
+<p>last updated: ${time} utc</p>
 </div>`;
     fs.writeFileSync("./profile-repo/README.md", readMeContent);
 }
