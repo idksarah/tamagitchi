@@ -20,7 +20,7 @@ tamagitchi is a cute Github README add-on to allow you to stand out from other u
 - go to your forked tamagitchi
 - go to settings
 - click on the secrets and variables dropdown. go to actions
-- add a new *repository secret*. name it **FPGA_TOKEN** and add your secret.
+- add a new *repository secret*. name it **FGPA_TOKEN** and add your secret.
 ### grant token access to your profile repository.  
 - repeat the earlier steps.
 ### edit your forked version of tamagitchi
