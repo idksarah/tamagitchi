@@ -9,10 +9,8 @@ const username = "idksarah";
 const highlightedRepo = "tamagitchi";
 
 // !! add your own README content here!
-const otherContent= `<h1> hi!! i'm sarah</h1>
-<p> i like coding. sometimes :3 </p>
-<p> find me on the hackclub slack @idksarah!</p>
-<hr class="solid">`;
+const otherContent= `<h2> rohan kalia </h2>
+<p> builder at heart. </p>`;
 
 dotenv.config();
 
