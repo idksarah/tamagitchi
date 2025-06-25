@@ -8,9 +8,9 @@ import stats from "./stats.json" with {type: "json"};
 const username = "idksarah";
 const highlightedRepo = "tamagitchi";
 
-// !! add your own README content here!
+// !! add your own README content here! make sure it's html 
 const otherContent= `<h1> hi!! i'm sarah</h1>
-<p> i like coding. sometimes :3 </p>
+<p> i. do not know what i'm doing! </p>
 <p> find me on the hackclub slack @idksarah!</p>
 <hr class="solid">`;
 
@@ -35,8 +35,6 @@ const sadContent=`
 <p>octocat is feeling excited because ${username} hasn't had any activity in the <i>past three days</i>.</p>
 <p>pet them to make them excited! (<a href="https://github.com/${username}/${highlightedRepo}">star ${username}'s ${highlightedRepo}!! ⭐</a>)</p>`;
 
-const updateFrequency = 24;
-
 let userRes, repoRes;
 
 const main = async () => {
@@ -47,18 +45,12 @@ const main = async () => {
          repo: highlightedRepo
     });
 
-    console.log(repoRes.data.stargazers_count);
-    console.log(stats.stargazers_count);
+    console.log("repo star count: " + repoRes.data.stargazers_count);
+    console.log("stats star count: " + stats.stargazers_count);
 
      if (repoRes.data.stargazers_count > stats.stargazers_count){
-        console.log("?");
         tamagitchi.pet.emotion = "excited";
-
-        // repeating these 2 bc tamagitchi shouldn't update if the star count hasn't changed or correct time has passed
-        updateStats();
-        updateReadme(tamagitchi.pet.emotion, getEmotionUrl(tamagitchi.pet.emotion));
-    } else if (Date.now() > (stats.lastUpdated + (DAY / updateFrequency))){
-        console.log("huh");
+    } else {
         const publicActivity = await octokit.rest.activity.listPublicEventsForUser({
             username: `${userRes.data.login}`,
             per_page: 15 
@@ -75,8 +67,7 @@ const main = async () => {
             }
         })
 
-        // sort activity into emotions
-        if (recentAct.length != 0){if(recentAct.length >= 1){
+        if (recentAct.length != 0) {if(recentAct.length >= 1){
             tamagitchi.pet.emotion = "happy";
             } 
         } else {
@@ -86,26 +77,19 @@ const main = async () => {
                 tamagitchi.pet.emotion = "neutral";
             }
         }
-        
-        console.log(recentAct.length);
-        console.log(olderAct.length);
-
-        updateStats();
-        updateReadme(tamagitchi.pet.emotion, getEmotionUrl(tamagitchi.pet.emotion));
     }
 
-    console.log(tamagitchi.pet.emotion);
+    updateStats();
+    updateReadme(tamagitchi.pet.emotion, getEmotionUrl(tamagitchi.pet.emotion));
 
+    console.log("emotion: " + tamagitchi.pet.emotion);
 };
 
 function updateStats(){
-    stats.lastUpdated = Date.now();
-    stats.followers = userRes.data.followers;
     stats.stargazers_count = repoRes.data.stargazers_count;
     console.log("file syncin json");
     fs.writeFileSync("./src/stats.json", JSON.stringify(stats, null, 2));
 }
-
 
 function updateReadme(emotion, url){
     let emotionContent;
@@ -128,7 +112,7 @@ function updateReadme(emotion, url){
 <img style="width: 50em;" src="${url}" alt="tamagitchi" /><br>
 ${emotionContent}
 
-<p>last updated: ${time} utc | tamagitchi takes 1-2 minutes to update, please be patient <3 </p>
+<p>last updated: ${time} utc | tamagitchi updates once an hour. check back soon! </p>
 </div>`;
     fs.writeFileSync("./profile-repo/README.md", readMeContent);
 }

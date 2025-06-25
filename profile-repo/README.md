@@ -1,5 +1,5 @@
 <h1> hi!! i'm sarah</h1>
-<p> i like coding. sometimes :3 </p>
+<p> i. do not know what i'm doing! </p>
 <p> find me on the hackclub slack @idksarah!</p>
 <hr class="solid">
 <div align="center">
@@ -8,5 +8,5 @@
 <p>octocat is feeling excited because idksarah received a star on <i>tamagitchi</i>!</p>
 <p>petting them can't make them any happier, but it sure will make idksarah happy! (<a href="https://github.com/idksarah/tamagitchi">star idksarah's tamagitchi!! ⭐</a>)</p>
 
-<p>last updated: 00:33 utc | tamagitchi takes 1-2 minutes to update, please be patient <3 </p>
+<p>last updated: 22:36 utc | tamagitchi takes 1-2 minutes to update, please be patient <3 </p>
 </div>
