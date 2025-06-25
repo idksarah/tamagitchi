@@ -5,14 +5,12 @@ import { getEmotionUrl, tamagitchi } from "./tamagitchi.mjs";
 import stats from "./stats.json" with {type: "json"};
 
 // !! add your username and the name of the repo you'd like to highlight
-const username = "idksarah";
-const highlightedRepo = "tamagitchi";
+const username = "rkdune";
+const highlightedRepo = "tinygraphs";
 
 // !! add your own README content here!
-const otherContent= `<h1> hi!! i'm sarah</h1>
-<p> i like coding. sometimes :3 </p>
-<p> find me on the hackclub slack @idksarah!</p>
-<hr class="solid">`;
+const otherContent= `<h2> Rohan Kalia </h2>
+<p> builder at heart. </p>`;
 
 dotenv.config();
 
@@ -23,17 +21,13 @@ const octokit = new Octokit({
 const DAY = 24 * 60 * 60 * 1000; 
 
 const excitedContent=`
-<p>octocat is feeling excited because ${username} received a star on <i>${highlightedRepo}</i>!</p>
-<p>petting them can't make them any happier, but it sure will make ${username} happy! (<a href="https://github.com/${username}/${highlightedRepo}">star ${username}'s ${highlightedRepo}!! ⭐</a>)</p>`;
+<p>octocat is feeling excited because ${username} received a star on <i>${highlightedRepo}</i>!</p>`;
 const happyContent=`
-<p>octocat is feeling happy because ${username} has made >= one commit today!</p>
-<p>pet them to make them excited! (<a href="https://github.com/${username}/${highlightedRepo}">star ${username}'s ${highlightedRepo}!! ⭐</a>)</p>`;
+<p>octocat is feeling happy because ${username} has made >= one commit today!</p>`;
 const neutralContent=`
-<p>octocat is feeling neutral because ${username} hasn't made a commit <i>today</i> but has made >= one commit in the <i>past three days</i>.</p>
-<p>pet them to make them excited! (<a href="https://github.com/${username}/${highlightedRepo}">star ${username}'s ${highlightedRepo}!! ⭐</a>)</p>`;
+<p>octocat is feeling neutral because ${username} hasn't made a commit <i>today</i> but has made >= one commit in the <i>past three days</i>.</p>`;
 const sadContent=`
-<p>octocat is feeling excited because ${username} hasn't had any activity in the <i>past three days</i>.</p>
-<p>pet them to make them excited! (<a href="https://github.com/${username}/${highlightedRepo}">star ${username}'s ${highlightedRepo}!! ⭐</a>)</p>`;
+<p>octocat is feeling excited because ${username} hasn't had any activity in the <i>past three days</i>.</p>`;
 
 const updateFrequency = 24;
 
@@ -125,10 +119,10 @@ function updateReadme(emotion, url){
     const time = Date().toString().toLowerCase().substring(16,21);
     const readMeContent = `${otherContent}
 <div align="center">
-<img style="width: 50em;" src="${url}" alt="tamagitchi" /><br>
+<img style="width: 25em;" src="${url}" alt="tamagitchi" /><br>
 ${emotionContent}
 
-<p>last updated: ${time} utc | tamagitchi takes 1-2 minutes to update, please be patient <3 </p>
+<p>last updated: ${time} utc</p>
 </div>`;
     fs.writeFileSync("./profile-repo/README.md", readMeContent);
 }

@@ -20,8 +20,8 @@ jobs:
       - name: Checkout profile repo
         uses: actions/checkout@v3
         with:
-          repository: idksarah/idksarah # !! replace with "your_user/your_user"
-          token: ${{ secrets.FGPA_TOKEN }}
+          repository: rkdune/rkdune # !! replace with "your_user/your_user"
+          token: ${{ secrets.FPGA_TOKEN }}
           path: profile-repo
           fetch-depth: 0
 
@@ -35,7 +35,7 @@ jobs:
 
       - name: Run tamagitchi update
         env:
-          GITHUB_TOKEN: ${{ secrets.FGPA_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.FPGA_TOKEN }}
         run: node ./src/index.mjs
 
       - name: Commit stats.json and README.md to tamagitchi repo
