@@ -109,7 +109,7 @@
 <hr>
 <h1>interested in designing your own tamagitchi?</h1>
 <p>
-    the base art files are located in <code>template/</code>. feel free to fork this repo and create your own designs.<br>
+    the base art files are located in <code>graphics/template/</code>. feel free to fork this repo and create your own designs.<br>
     actual implementation requires hosting the designs on a cdn and replacing the file links in <code>src/tamagitchi.mjs</code>.<br>
     dm me if you have any questions.
 </p>
