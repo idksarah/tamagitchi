@@ -1,68 +1,68 @@
-name: Update
+# name: Update
 
-on:
-  schedule:
-    - cron: "*/15 * * * *" # runs every 15 minutes
-  workflow_dispatch:
+# on:
+#   schedule:
+#     - cron: "*/15 * * * *" # runs every 15 minutes
+#   workflow_dispatch:
 
-permissions:
-  contents: write
+# permissions:
+#   contents: write
 
-jobs:
-  update:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout tamagitchi repo
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+# jobs:
+#   update:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout tamagitchi repo
+#         uses: actions/checkout@v3
+#         with:
+#           fetch-depth: 0
 
-      - name: Checkout profile repo
-        uses: actions/checkout@v3
-        with:
-          repository: rkdune/rkdune # !! replace with "your_user/your_user"
-          token: ${{ secrets.FPGA_TOKEN }}
-          path: profile-repo
-          fetch-depth: 0
+#       - name: Checkout profile repo
+#         uses: actions/checkout@v3
+#         with:
+#           repository: rkdune/rkdune # !! replace with "your_user/your_user"
+#           token: ${{ secrets.FPGA_TOKEN }}
+#           path: profile-repo
+#           fetch-depth: 0
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
+#       - name: Setup Node
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: 20
 
-      - name: Install dependencies
-        run: npm install
+#       - name: Install dependencies
+#         run: npm install
 
-      - name: Run tamagitchi update
-        env:
-          GITHUB_TOKEN: ${{ secrets.FPGA_TOKEN }}
-        run: node ./src/index.mjs
+#       - name: Run tamagitchi update
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.FPGA_TOKEN }}
+#         run: node ./src/index.mjs
 
-      - name: Commit stats.json and README.md to tamagitchi repo
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add stats.json README.md
-          if git diff --cached --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "Update tamagitchi"
-            git stash
-            git pull origin main --rebase
-            git stash pop
-            git push origin HEAD:main
-          fi
+#       - name: Commit stats.json and README.md to tamagitchi repo
+#         run: |
+#           git config user.name "github-actions[bot]"
+#           git config user.email "github-actions[bot]@users.noreply.github.com"
+#           git add stats.json README.md
+#           if git diff --cached --quiet; then
+#             echo "No changes to commit"
+#           else
+#             git commit -m "Update tamagitchi"
+#             git stash
+#             git pull origin main --rebase
+#             git stash pop
+#             git push origin HEAD:main
+#           fi
 
-      - name: Commit updated README.md to profile repo
-        working-directory: ./profile-repo
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add README.md
-          if git diff --cached --quiet; then
-            echo "No changes to commit in profile repo"
-          else
-            git commit -m "Update tamagitchi emotion in profile"
-            git pull origin main --rebase
-            git push origin HEAD:main
-          fi
+#       - name: Commit updated README.md to profile repo
+#         working-directory: ./profile-repo
+#         run: |
+#           git config user.name "github-actions[bot]"
+#           git config user.email "github-actions[bot]@users.noreply.github.com"
+#           git add README.md
+#           if git diff --cached --quiet; then
+#             echo "No changes to commit in profile repo"
+#           else
+#             git commit -m "Update tamagitchi emotion in profile"
+#             git pull origin main --rebase
+#             git push origin HEAD:main
+#           fi
